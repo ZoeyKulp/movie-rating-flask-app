@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Movie Rating Prediction</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #eef3ff, #f8fbff);
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            width: 460px;
+            background-color: white;
+            padding: 35px;
+            border-radius: 18px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        h1 {
+            text-align: center;
+            color: #2d2d2d;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 28px;
+            font-size: 14px;
+        }
+
+        label {
+            display: block;
+            margin-top: 16px;
+            font-weight: bold;
+            color: #222;
+        }
+
+        input {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 12px;
+            margin-top: 6px;
+            border: 1px solid #cfcfcf;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        input:focus {
+            border-color: #4f7df3;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(79, 125, 243, 0.15);
+        }
+
+        button {
+            width: 100%;
+            margin-top: 28px;
+            padding: 13px;
+            background-color: #4f7df3;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #3f68d8;
+        }
+
+        #result {
+            margin-top: 24px;
+            padding: 14px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            color: #1b5e20;
+            background-color: #e8f5e9;
+            border-radius: 10px;
+            display: none;
+        }
+
+        #error {
+            margin-top: 20px;
+            padding: 12px;
+            text-align: center;
+            color: #b71c1c;
+            background-color: #ffebee;
+            border-radius: 10px;
+            font-weight: bold;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Movie Rating Prediction</h1>
+        <p class="subtitle">Enter movie details and get an estimated IMDb rating</p>
+
+        <form id="prediction-form">
+            <label for="startYear">Start Year</label>
+            <input type="number" id="startYear" name="startYear" placeholder="Example: 2020" required>
+
+            <label for="runtimeMinutes">Runtime Minutes</label>
+            <input type="number" id="runtimeMinutes" name="runtimeMinutes" placeholder="Example: 120" required>
+
+            <label for="genres">Genres</label>
+            <input type="text" id="genres" name="genres" placeholder="Example: Drama, Comedy" required>
+
+            <label for="Language">Language</label>
+            <input type="text" id="Language" name="Language" placeholder="Example: English" required>
+
+            <label for="Country">Country</label>
+            <input type="text" id="Country" name="Country" placeholder="Example: USA" required>
+
+            <button type="submit">Predict Rating</button>
+        </form>
+
+        <div id="result"></div>
+        <div id="error"></div>
+    </div>
+
+    <script>
+        document.getElementById("prediction-form").addEventListener("submit", async function(event) {
+            event.preventDefault();
+
+            const resultBox = document.getElementById("result");
+            const errorBox = document.getElementById("error");
+
+            resultBox.style.display = "none";
+            errorBox.style.display = "none";
+            resultBox.innerHTML = "";
+            errorBox.innerHTML = "";
+
+            const data = {
+                startYear: document.getElementById("startYear").value,
+                runtimeMinutes: document.getElementById("runtimeMinutes").value,
+                genres: document.getElementById("genres").value,
+                Language: document.getElementById("Language").value,
+                Country: document.getElementById("Country").value
+            };
+
+            try {
+                const response = await fetch("/predict", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    resultBox.innerHTML = "Predicted Rating: " + result.predicted_rating + " / 10";
+                    resultBox.style.display = "block";
+                } else {
+                    errorBox.innerHTML = result.error || "An error occurred. Please check your input.";
+                    errorBox.style.display = "block";
+                }
+
+            } catch (error) {
+                errorBox.innerHTML = "Server connection failed. Please try again.";
+                errorBox.style.display = "block";
+            }
+        });
+    </script>
+</body>
+</html>
