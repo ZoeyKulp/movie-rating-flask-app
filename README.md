@@ -18,13 +18,24 @@ movie_rating_app/
 ## Installation
 
 1. Clone the repository:
-```
+
+```bash
 git clone <repository-url>
 cd movie_rating_app
 ```
 
-2. Install the required packages:
+2. Create and activate a virtual environment:
+
+```bash
+python -m venv venv
+
+# Windows
+venv\Scripts\activate
 ```
+
+3. Install the required packages:
+
+```bash
 pip install -r requirements.txt
 ```
 
