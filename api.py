@@ -53,7 +53,7 @@ def predict():
         try:
             data["startYear"] = int(data["startYear"])
             data["runtimeMinutes"] = float(data["runtimeMinutes"])
-        except ValueError:
+        except (ValueError, TypeError):
             return jsonify({
                 "error": "startYear and runtimeMinutes must be numeric values"
             }), 400
@@ -77,7 +77,7 @@ def predict():
                 return jsonify({
                     "error": f"{field} must be a text value"
                 }), 400
-
+               
         # 7. Build one-row DataFrame
         input_df = pd.DataFrame([data])
 
@@ -98,7 +98,7 @@ def predict():
 
     except Exception:
         return jsonify({
-        "error": "Internal server error"
+            "error": "Internal server error"
         }), 500
 
 
