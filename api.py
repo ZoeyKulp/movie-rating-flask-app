@@ -69,15 +69,18 @@ def predict():
                 "error": "runtimeMinutes must be between 60 and 300"
             }), 400
 
+        
         # 6. Validate text fields
-        text_fields = ["genres", "Language", "Country"]
+        text_fields = ["Language", "Country"]
 
         for field in text_fields:
-            if str(data[field]).strip().isdigit():
+            value = str(data[field]).strip()
+
+            if any(char.isdigit() for char in value):
                 return jsonify({
-                    "error": f"{field} must be a text value"
+                    "error": f"{field} must be text only and cannot contain numbers"
                 }), 400
-               
+
         # 7. Build one-row DataFrame
         input_df = pd.DataFrame([data])
 
