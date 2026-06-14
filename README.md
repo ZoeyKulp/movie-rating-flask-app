@@ -57,7 +57,7 @@ Then open your browser and go to: `http://localhost:5000`
 | Field | Description | Expected Value |
 |-------|-------------|----------------|
 | Start Year | Year the movie was released | 1888–2026 |
-| Runtime Minutes | Duration of the movie in minutes | Positive number, e.g. 120 |
+| Runtime Minutes | Duration of the movie in minutes | Number between 60 and 300 |
 | Genres | Comma-separated list of genres | Text, e.g. Drama, Comedy |
 | Language | The movie's language | Text, e.g. English. If unknown, enter `Not Found` |
 | Country | The country of production | Text, e.g. United States. If unknown, enter `Not Found` |
@@ -66,7 +66,7 @@ Then open your browser and go to: `http://localhost:5000`
 ## Expected Ranges
 
 - `startYear`: number between 1888 and 2026
-- `runtimeMinutes`: positive number
+- `runtimeMinutes`: number between 60 and 300
 - `genres`: comma-separated genres, for example: Drama, Comedy, Action
 - `Language`: text, for example: English. If unknown, enter `Not Found`
 - `Country`: text, for example: United States. If unknown, enter `Not Found`
@@ -97,10 +97,10 @@ Response example:
 ```
 
 Error responses:
-- `400` – Missing or invalid input fields
-- `500` – Internal server error
+- `400` - Missing or invalid input fields
+- `500` - Internal server error
 
 ## Authors
 
-- זוהר קולפ — 322435918
-- רוני פחימה — 212009260
+- זוהר קולפ - 322435918
+- רוני פחימה - 212009260
