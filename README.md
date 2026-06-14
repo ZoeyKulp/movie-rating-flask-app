@@ -58,7 +58,7 @@ Then open your browser and go to: `http://localhost:5000`
 |-------|-------------|----------------|
 | Start Year | Year the movie was released | 1888–2026 |
 | Runtime Minutes | Duration of the movie in minutes | Number between 60 and 300 |
-| Genres | Comma-separated list of genres | Text, e.g. Drama, Comedy |
+| Genres | Select one or more genres from the list | Drama, Comedy, Action, Thriller, Romance, Horror, Documentary, Crime, Adventure, Animation, Other |
 | Language | The movie's language | Text, e.g. English. If unknown, enter `Not Found` |
 | Country | The country of production | Text, e.g. United States. If unknown, enter `Not Found` |
 
@@ -67,7 +67,7 @@ Then open your browser and go to: `http://localhost:5000`
 
 - `startYear`: number between 1888 and 2026
 - `runtimeMinutes`: number between 60 and 300
-- `genres`: comma-separated genres, for example: Drama, Comedy, Action
+- `genres`: select one or more genres from the list (Drama, Comedy, Action, Thriller, Romance, Horror, Documentary, Crime, Adventure, Animation, Other)
 - `Language`: text, for example: English. If unknown, enter `Not Found`
 - `Country`: text, for example: United States. If unknown, enter `Not Found`
 
