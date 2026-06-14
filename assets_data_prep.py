@@ -103,4 +103,4 @@ def prepare_data(df):
     leakage_found = [col for col in LEAKAGE_COLS if col in selected_cols]
     assert len(leakage_found) == 0, f"Leakage columns detected: {leakage_found}"
 
-    return df[selected_cols].astype(float)
+    return df[selected_cols]
