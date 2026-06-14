@@ -58,7 +58,18 @@ def predict():
                 "error": "startYear and runtimeMinutes must be numeric values"
             }), 400
 
-        # 5. Validate text fields
+        # 5. Validate numeric ranges
+        if data["startYear"] < 1888 or data["startYear"] > 2026:
+            return jsonify({
+                "error": "startYear must be between 1888 and 2026"
+            }), 400
+
+        if data["runtimeMinutes"] < 60 or data["runtimeMinutes"] > 300:
+            return jsonify({
+                "error": "runtimeMinutes must be between 60 and 300"
+            }), 400
+
+        # 6. Validate text fields
         text_fields = ["genres", "Language", "Country"]
 
         for field in text_fields:
@@ -67,20 +78,20 @@ def predict():
                     "error": f"{field} must be a text value"
                 }), 400
 
-        # 6. Build one-row DataFrame
+        # 7. Build one-row DataFrame
         input_df = pd.DataFrame([data])
 
-        # 7. Apply prepare_data
+        # 8. Apply prepare_data
         processed_df = prepare_data(input_df)
 
         # Convert columns to float for model prediction
         processed_df = processed_df.astype(float)
 
 
-        # 8. Predict rating
+        # 9. Predict rating
         prediction = model.predict(processed_df)[0]
 
-        # 9. Return result
+        # 10. Return result
         return jsonify({
             "predicted_rating": round(float(prediction), 2)
         })
